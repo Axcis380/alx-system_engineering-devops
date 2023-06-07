@@ -1,2 +1,2 @@
 #!/bin/bash
-mkfir/tmp/my_first_directory/
+mkfir /tmp/my_first_directory/
