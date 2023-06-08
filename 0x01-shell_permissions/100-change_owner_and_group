@@ -1,2 +1,3 @@
 #!/bin/bash
-chown vincent:staf *
+chown vincent:staff *
+chown -R vincent:staff dir*
