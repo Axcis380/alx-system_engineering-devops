@@ -1,6 +1,14 @@
 #!/bin/bash
-water="$WATER"
-stir="$STIR"
-result=$(echo "$water + $stir" | bc)
-export BESTCHOL="$result"
-echo "The result is: $BESTCHOL"
+
+# Convert WATER and STIR to decimal and perform addition
+result=$((5#$(echo "$WATER" | tr 'water' '01234') + 5#$(echo "$STIR" | tr 'stir.' '01234')))
+
+# Convert the result to base bestchol
+base_bestchol=$(printf "%o\n" "$result")
+
+# Convert the result to desired characters
+final_result=$(echo "$base_bestchol" | tr '01234567' 'behlnort')
+
+# Print the result
+echo "The result in base bestchol is: $final_result"
+
