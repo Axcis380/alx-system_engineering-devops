@@ -1,6 +1,3 @@
 #!/bin/bash
-echo $(printf "%06s\n" $(echo "obase=36;ibase=36;$(
-    echo "$WATER" | tr 'water' '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-  ) + $(
-    echo "$STIR" | tr 'stir.' '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-  )" | bc) | tr '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' 'shtbeolhc')
+echo $(printf "%06s\n" $(echo "obase=36;ibase=36;$(echo "$WATER" | tr 'water' '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ') + $(echo "$STIR" | tr 'stir.' '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ')" | bc) | tr '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' 'shtbeolhc')
+
