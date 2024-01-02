@@ -1,4 +1,3 @@
 #!/bin/bash
 
-ssh-keygen -t rsa -b 4096 -f school -C "Generated key for ALX" -N 'betty' <<< y
-
+ssh-keygen  -b 4096 -f school -C" -N 'betty'
