@@ -1,33 +1,23 @@
 #!/usr/bin/env bash
-# Displays informtation about subdomains.
-
-#set -x
-
-
-# colors
-blue='\e[1;34m'
-brown='\e[0;33m'
-reset='\033[0m'
-
-# variables & parameters
-subdomains=( "www" "lb-01" "web-01" "web-02" )
-domain="$1"
-sub="$2"
-
-dig_cmd () {
-	# func variables
-	sub="$2"
-	INFO="$(dig "$sub.$domain" | grep -A1 'ANSWER SECTION:' | awk 'NR==2')"
-	IP=$(echo "$INFO" | awk '{print $5}')
-	RECORD=$(echo "$INFO" | awk '{print $4}')
-
-	echo -e "${blue}The subdomain ${brown}$sub${blue} is a ${blue}$RECORD${brown} record and points to ${brown}$IP${reset}"
+# Usage:
+# ./1-world-wide-web <domain> <subdomain>
+# Display information about subdomains.
+# Function to retrieve and display information about a subdomain
+domain_information () {
+  # Perform DNS Lookup for the subdomain under specified domain
+  line=$(dig "$2"."$1" | grep -A1 'ANSWER SECTION:' | tr "\t" " " | tail -2 | tr '\n' ' ')
+  # Extract relevant information and print it
+  echo "$2 $line" | awk '{print "The subdomain " $1 " is a " $2 " record and points to " $3}'
 }
 
-if [ $# -eq 1 ]; then
-	for subs in "${subdomains[@]}"; do
-		dig_cmd "$domain" "$subs"
-	done
-elif [ $# -eq 2 ]; then
-	dig_cmd "$domain" "$sub"
+# Check the number of arguments passed to the script
+if [ "$#" -eq 1 ]; then
+  # If there is only one argument, call the domain information function with predefined subdomain names
+  domain_information "$1" "www"
+  domain_information "$1" "1b-01"
+  domain_information "$1" "web-01"
+  domain_information "$1" "web-02"
+elif [ "$#" -eq 2 ]; then
+  # If there are two arguments, call the domain information function with the provided subdomain name
+  domain_information "$1" "$2"
 fi
