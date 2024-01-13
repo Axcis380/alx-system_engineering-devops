@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-# configs a server toliing onport80of allservrs act IPv4 IPs
+# Configures a server listening on port 80 of all servers with IPv4 IPs
 sudo sed -i "s/8080/80/" /etc/nginx/sites-enabled/default
 sudo service nginx restart
