@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 # Configures a server listening on port 80 of all servers with IPv4 IPs
 
-#remov ngix config file
-rm /etc/ngix/sites-enabled/default
-#conf ngx t lsten port 80 4all IPv4 ips
-in -s /etc/ngix/sites-available/default /etc/ngix/sites-enabled/default
-# restart ngix
-service ngix restart
+# Remove Nginx default config file
+rm /etc/nginx/sites-enabled/default
+
+# Create a symbolic link to the default Nginx config for IPv4
+ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+
+# Restart Nginx
+service nginx restart
