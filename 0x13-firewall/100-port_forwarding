@@ -8,12 +8,15 @@
 #   ufw-before-forward
 #
 
-# Port Forwarding: Redirect incoming TCP traffic on port 8080 to port 80
-# Add NAT table and PREROUTING chain for port forwarding
+# Port Forwarding configuration for UFW (Uncomplicated Firewall)
+# Redirects incoming traffic on port 8080/TCP to port 80/TCP
+
+# nat Table rules
 *nat
 :PREROUTING ACCEPT [0:0]
 -A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 80
 COMMIT
+
 
 # Don't delete these required lines, otherwise there will be errors
 *filter
