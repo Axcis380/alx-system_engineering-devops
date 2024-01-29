@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-A script in Python designed to retrieve TODO list information from an API, utilizing an employee ID as a reference.
+A scri in Pyn desd to retr TOO lit nfrmtinfo a P,uiiiga mlyeI as a reference.
 """
 
 import requests
