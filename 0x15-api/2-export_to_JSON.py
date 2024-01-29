@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-A Python script designed to export TODO list information to a JSON file, with a specified employee ID as the input.
+A Python script that exports TODO list data to a JSON file, using a specified employee ID.
 """
 
 import json
