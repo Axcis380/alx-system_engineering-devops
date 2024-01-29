@@ -2,7 +2,6 @@
 """
 A Python script that exports TODO list data to a JSON file, using a specified employee ID.
 """
-
 import json
 import requests
 import sys
