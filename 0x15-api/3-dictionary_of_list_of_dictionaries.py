@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-A Python script to export tasks of all employees to a JSON file.
+A Python script for exporting tasks for all employees to a JSON file.
 """
 
 import json

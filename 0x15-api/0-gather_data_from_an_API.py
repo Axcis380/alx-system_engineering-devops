@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-A Python script to gather TODO list data from an API based on an employee ID.
+A script in Python designed to retrieve TODO list information from an API, utilizing an employee ID as a reference.
 """
 
 import requests

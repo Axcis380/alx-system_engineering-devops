@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-A Python script to export TODO list data to a CSV file for a given employee ID.
+A Python script that exports TODO list information to a CSV file, using a specified employee ID as a parameter.
 """
 
 import csv
