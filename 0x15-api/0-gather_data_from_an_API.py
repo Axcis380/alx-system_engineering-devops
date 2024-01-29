@@ -1,30 +1,40 @@
 #!/usr/bin/python3
-'''A script that gathers employee name completed
-tasks and total number of tasks from an API
-'''
+"""
+A Python script to gather TODO list data from an API based on an employee ID.
+"""
 
-import re
 import requests
 import sys
 
-REST_API = "https://jsonplaceholder.typicode.com"
 
-if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        if re.fullmatch(r'\d+', sys.argv[1]):
-            id = int(sys.argv[1])
-            emp_req = requests.get('{}/users/{}'.format(REST_API, id)).json()
-            task_req = requests.get('{}/todos'.format(REST_API)).json()
-            emp_name = emp_req.get('name')
-            tasks = list(filter(lambda x: x.get('userId') == id, task_req))
-            completed_tasks = list(filter(lambda x: x.get('completed'), tasks))
-            print(
-                'Employee {} is done with tasks({}/{}):'.format(
-                    emp_name,
-                    len(completed_tasks),
-                    len(tasks)
-                )
-            )
-            if len(completed_tasks) > 0:
-                for task in completed_tasks:
-                    print('\t {}'.format(task.get('title')))
+def main():
+    if len(sys.argv) != 2:
+        print("Usage: ./0-gather_data_from_an_API.py <employee ID>")
+        return
+
+    employee_id = sys.argv[1]
+    try:
+        user_url = f'https://jsonplaceholder.typicode.com/users/{employee_id}'
+        user_response = requests.get(user_url)
+        user = user_response.json()
+
+        todos_url_base = 'https://jsonplaceholder.typicode.com/todos?userId='
+        todos_url = f'{todos_url_base}{employee_id}'
+        todos_response = requests.get(todos_url)
+        todos = todos_response.json()
+
+        completed_tasks = [task for task in todos if task['completed']]
+        total_tasks = len(todos)
+        completed_count = len(completed_tasks)
+
+        print("Employee {} is done with tasks({}/{}):"
+              .format(user['name'], completed_count, total_tasks))
+        for task in completed_tasks:
+            print(f"\t {task['title']}")
+
+    except requests.exceptions.RequestException as e:
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()
