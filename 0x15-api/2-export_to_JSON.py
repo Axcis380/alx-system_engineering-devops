@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-A Python script that exports TODO list data to a JSON file, using a specified employee ID.
+A thon script ha exports TDO list data o a JSON file,usinga pcifid employee ID.
 """
 import json
 import requests
