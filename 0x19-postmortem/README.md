@@ -17,7 +17,8 @@ Root Cause and Resolution:
 The root cause of the slow response times was a memory leak in the backend application logic introduced by a recent code update. This leak caused the server to consume more and more memory, impacting its overall performance and leading to slower API responses.
 The issue was resolved by deploying a hotfix that addressed the memory leak. This patch stopped the memory consumption and allowed the server to recover its performance.
 Corrective and Preventative Measures:
-Implement code reviews and static analysis tools to detect potential memory leaks in the future.
+Implement code reviews and static analysis tools to detect potential memory leaks in the future.![postmortem](https://github.com/Axcis380/alx-system_engineering-devops/assets/133226284/e2b1163b-9ae2-46c5-88b8-c587bfd567d0)
+
 Run automated tests with simulated high loads to identify performance bottlenecks before deployment.
 Improve monitoring and alerting to detect memory issues early and trigger faster response.
 Invest in performance profiling tools to analyze resource usage and identify memory leaks efficiently.
