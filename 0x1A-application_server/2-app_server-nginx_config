@@ -1,19 +1,29 @@
-#!/usr/bin/python3
-"""
-A Flask web application module.
-This module starts a Flask web application that listens on 0.0.0.0, port 5000.
-It defines a route '/' to display "Hello HBNB!".
-"""
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    # Use the server's IP address as the domain name
+    server_name 100.26.224.17;
 
-from flask import Flask
-app = Flask(__name__)
+    # Customize the HTTP response header
+    add_header X-Served-By 451621-web-01;
 
+    # Route /airbnb-onepage/ to Airbnb_clone_v3
+    location /airbnb-onepage/ {
+        proxy_pass http://127.0.0.1:5000/airbnb-onepage/;
+    }
 
-@app.route('/airbnb-onepage/', strict_slashes=False)
-def hello_hbnb():
-    """ Route '/' to display 'Hello HBNB!' """
-    return "Hello HBNB!"
+    # Route /airbnb-dynamic/number_odd_or_even/ to AirBnB_clone_v2
+    location ~ /airbnb-dynamic/number_odd_or_even/(\d+)$ {
+        proxy_pass http://127.0.0.1:5001/number_odd_or_even/$1;
+    }
 
+    # Custom 404 error page
+    error_page 404 /404.html;
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
+    # Handle 404 errors
+    location = /404.html {
+        root /var/www/html;
+        internal;
+    }
+}
+~             
