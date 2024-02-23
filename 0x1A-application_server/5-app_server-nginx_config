@@ -1,0 +1,54 @@
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    server_name _;
+
+    location / {
+        proxy_pass http://127.0.0.1:5003/2-hbnb;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+    location /static/ {
+        alias /web_dynamic/static/;
+    }
+
+    location /redirect_me {
+        return 301 https://github.com/himza25;
+    }
+
+    error_page 404 /404.html;
+    location = /404.html {
+        internal;
+    }
+
+    add_header X-Served-By $hostname;
+
+    # Existing configuration for the old static and dynamic content
+    location /airbnb-onepage/ {
+        proxy_pass http://localhost:5000;
+    }
+
+    location /hbnb_static/ {
+        alias /data/web_static/current/;
+    }
+
+    location /airbnb-dynamic/number_odd_or_even/ {
+        proxy_pass http://localhost:5001/number_odd_or_even/;
+    }
+
+    # Configuration for the API - If it's the same as the required task, keep it as it is
+    location /api/ {
+        proxy_pass http://localhost:5002;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
