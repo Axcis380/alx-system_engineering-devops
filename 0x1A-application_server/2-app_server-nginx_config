@@ -1,29 +1,51 @@
 server {
     listen 80 default_server;
     listen [::]:80 default_server;
-    # Use the server's IP address as the domain name
-    server_name 100.26.224.17;
 
-    # Customize the HTTP response header
-    add_header X-Served-By 451621-web-01;
+    # SSL configuration
+    # listen 443 ssl default_server;
+    # listen [::]:443 ssl default_server;
+    # Note: Disable gzip for SSL traffic.
+    # include snippets/snakeoil.conf;
 
-    # Route /airbnb-onepage/ to Airbnb_clone_v3
+    root /var/www/html;
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name _;
+
+    # Serveur par défaut pour les requêtes non capturées par d'autres server_name
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    # Configuration spécifique pour /airbnb-onepage/
     location /airbnb-onepage/ {
-        proxy_pass http://127.0.0.1:5000/airbnb-onepage/;
+        proxy_pass http://localhost:5000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
     }
 
-    # Route /airbnb-dynamic/number_odd_or_even/ to AirBnB_clone_v2
-    location ~ /airbnb-dynamic/number_odd_or_even/(\d+)$ {
-        proxy_pass http://127.0.0.1:5001/number_odd_or_even/$1;
+    # Redirection spécifique
+    location /redirect_me {
+        return 301 https://github.com/axcis380;
     }
 
-    # Custom 404 error page
+    # Gestion de l'erreur 404
     error_page 404 /404.html;
-
-    # Handle 404 errors
     location = /404.html {
-        root /var/www/html;
         internal;
     }
+
+    # Header personnalisé pour identifier le serveur
+    add_header X-Served-By $hostname;
+
+    # Alias pour servir le contenu statique
+    location /hbnb_static/ {
+        alias /data/web_static/current/;
+    }
+
+    # Autres configurations (PHP, .htaccess, etc.) peuvent être ajoutées ici
 }
-~             

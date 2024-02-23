@@ -20,7 +20,7 @@ server {
     }
 
     location /redirect_me {
-        return 301 https://github.com/himza25;
+        return 301 https://github.com/axcis380;
     }
 
     error_page 404 /404.html;
